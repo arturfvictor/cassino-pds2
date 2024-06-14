@@ -1,0 +1,9 @@
+{
+    "players": [
+        {
+            "id": "1",
+            "name": "Johnson",
+            "balance": 22.22
+        }
+    ]
+}
