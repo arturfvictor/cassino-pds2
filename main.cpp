@@ -3,6 +3,7 @@
 #include <vector>
 
 #include "./dao/hpp/PlayerMapDao.hpp"
+#include "./module/input-module/hpp/CommandLineInputModule.hpp"
 #include "./module/graphic-module/hpp/CommandLineGraphicModule.hpp"
 #include "./module/random-number-generator/hpp/BasicRandomNumberGenerator.hpp"
 #include "./game/hpp/CoinFlipGame.hpp"
@@ -16,6 +17,7 @@ void showGameMenu(GraphicModule* graphicModule, vector<Game*> games);
 
 int main() {
     GraphicModule* graphicModule = new CommandLineGraphicModule();
+    InputModule* inputModule = new CommandLineInputModule(graphicModule);
     RandomNumberGenerator* randomNumberGenerator = new BasicRandomNumberGenerator();
 
     Player* p1 = new Player(1, "Player1", 16000.0);
