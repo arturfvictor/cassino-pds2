@@ -31,15 +31,7 @@ void CommandLineGraphicModule::print(string text, int speed, bool bold, bool und
 
 void CommandLineGraphicModule::println(string text, int speed, bool bold, bool underline) { //speed == chars/second
     text += "\n";
-    enableTextFormatting(bold, underline);
-
-    int waitTime = 1000 / speed; 
-    for (int i = 0; i < text.size(); i++) {
-        cout << text[i] << flush;
-        sleep_for(milliseconds(waitTime));
-    }
-
-    disableTextFormatting(bold, underline);
+    print(text, speed, bold, underline);
 }
 
 void CommandLineGraphicModule::clear() {
