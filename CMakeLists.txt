@@ -17,7 +17,7 @@ set(SOURCES
 )
 
 # Include header files
-include_directories(dao/hpp game/hpp model/hpp module/graphic-module/hpp module/random-number-generator/hpp)
+include_directories(dao/hpp game/hpp model/hpp module/graphic-module/hpp module/random-number-generator/hpp input-module/hpp)
 
 # Create an executable
 add_executable(cassino_royale ${SOURCES})
