@@ -29,6 +29,11 @@ void CommandLineGraphicModule::print(string text, int speed, bool bold, bool und
     disableTextFormatting(bold, underline);
 }
 
+void CommandLineGraphicModule::println(string text, int speed, bool bold, bool underline) { //speed == chars/second
+    text += "\n";
+    print(text, speed, bold, underline);
+}
+
 void CommandLineGraphicModule::clear() {
     #ifdef _WIN32
     std::system("cls");

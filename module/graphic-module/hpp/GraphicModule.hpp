@@ -8,6 +8,7 @@ using std::string;
 class GraphicModule {
     public:
         void virtual print(string text, int speed, bool bold, bool underline) = 0; // speend == chars/second
+        void virtual println(string text, int speed, bool bold, bool underline) = 0;
         void virtual clear() = 0;
 };
 

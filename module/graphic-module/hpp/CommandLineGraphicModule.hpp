@@ -12,6 +12,7 @@ class CommandLineGraphicModule : public GraphicModule {
     public:
         CommandLineGraphicModule();
         void print(string text, int speed, bool bold, bool underline) override;
+        void println(string text, int speed, bool bold, bool underline) override;
         void clear() override;
 };
 
