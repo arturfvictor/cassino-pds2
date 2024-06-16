@@ -10,6 +10,7 @@ class CommandLineGraphicModule : public GraphicModule {
         void enableTextFormatting(bool bold, bool underline);
         void disableTextFormatting(bool bold, bool underline);
     public:
+        /// @brief Construtor do CommandLineGraphicModule
         CommandLineGraphicModule();
         void print(string text, int speed, bool bold, bool underline) override;
         void println(string text, int speed, bool bold, bool underline) override;
