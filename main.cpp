@@ -22,7 +22,7 @@ int main() {
 
     Player* p1 = new Player(1, "Player1", 16000.0);
 
-    Game* coinFlip = new CoinFlipGame(graphicModule, randomNumberGenerator, "Cara ou Coroa");
+    Game* coinFlip = new CoinFlipGame(graphicModule, randomNumberGenerator, inputModule, "Cara ou Coroa");
 
     vector<Game*> games;
     games.push_back(coinFlip);
