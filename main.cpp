@@ -27,11 +27,11 @@ int main() {
     vector<Game*> games;
     games.push_back(coinFlip);
 
-    showGameMenu(graphicModule, games);
-    int gameId;
-    scanf("%d", &gameId);
-
-    games[gameId]->play(p1);
+    while (true) {
+        showGameMenu(graphicModule, games);
+        int gameId = inputModule->readIntInRange("", 0, games.size() - 1);
+        games[gameId]->play(p1);
+    }
 }
 
 void showGameMenu(GraphicModule* graphicModule, vector<Game*> games) {
