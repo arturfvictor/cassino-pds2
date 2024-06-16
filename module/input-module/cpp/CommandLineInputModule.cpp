@@ -4,34 +4,58 @@
 
 using std::cin;
 
-CommandLineInputModule::CommandLineInputModule(GraphicModule* graphicModule): graphicModule(graphicModule) {
+CommandLineInputModule::CommandLineInputModule(GraphicModule* graphicModule): InputModule(), graphicModule(graphicModule) {
 }
 
 int CommandLineInputModule::readInt(string text) {
     int tries = 0;
     while(tries < 3) {
-        tries++;
-
         graphicModule->print(text, 50, true, false);
-        
-        int input;
-        cin >> input;
 
-        if (cin.fail()) {
-
-            // reseting cin state
-            cin.clear();
-            string ignore;
-            std::getline(cin, ignore);
-
-            graphicModule->println("Entrada inválida, tente novamente. (Tipo esperado: int)", 50, true, true);
-            continue;
+        try {
+            return readInt();
+        } catch (const std::invalid_argument &e) {
+            graphicModule->println(e.what(), 50, false, false);
         }
 
-        return input;
+        tries++;
+    }
+    throw std::invalid_argument("Excedido o número de tentativas!");
+}
+
+int CommandLineInputModule::readIntInRange(string text, int start, int end) {
+    int tries = 0;
+    while(tries < 3) {
+        try {
+            int input = readInt();
+
+            if (input < start || input > end) {
+                tries++;
+                throw std::invalid_argument("Entrada inválida, tente novamente. (Tipo esperado: int entre " + std::to_string(start) + " e " + std::to_string(end) + ")");
+            }
+            
+            return input;
+        } catch (const std::invalid_argument &e) {
+            graphicModule->println(e.what(), 50, false, false);
+        }
+    }
+    throw std::invalid_argument("Excedido o número de tentativas!");
+}
+
+int CommandLineInputModule::readInt() {
+    int input;
+    cin >> input;
+
+    if (cin.fail()) {
+        // reseting cin state
+        cin.clear();
+        string ignore;
+        std::getline(cin, ignore);
+
+        throw std::invalid_argument("Entrada inválida, tente novamente. (Tipo esperado: int)");
     }
 
-    throw std::invalid_argument("Excedido o número de tentativas!");
+    return input;
 }
 
 double CommandLineInputModule::readDouble(string text) {
