@@ -1,3 +1,0 @@
-/home/artur/Documents/personal/ufmg/pds2/cassino-royale/cmake-build-debug/CMakeFiles/cassino_royale.dir
-/home/artur/Documents/personal/ufmg/pds2/cassino-royale/cmake-build-debug/CMakeFiles/edit_cache.dir
-/home/artur/Documents/personal/ufmg/pds2/cassino-royale/cmake-build-debug/CMakeFiles/rebuild_cache.dir
