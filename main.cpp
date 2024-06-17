@@ -7,7 +7,7 @@
 #include "./module/graphic-module/hpp/CommandLineGraphicModule.hpp"
 #include "./module/random-number-generator/hpp/BasicRandomNumberGenerator.hpp"
 #include "./game/hpp/CoinFlipGame.hpp"
-#include "./game/hpp/JogodoBicho.hpp"
+#include "./game/hpp/JogoDoBicho.hpp"
 #include "./game/blackjack/blackjack_hpp/blackJack.hpp"
 #include "./dao/hpp/GenericDao.hpp"
 #include "./model/hpp/Player.hpp"

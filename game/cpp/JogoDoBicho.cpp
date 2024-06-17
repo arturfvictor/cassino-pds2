@@ -1,4 +1,4 @@
-#include "JogoDoBicho.hpp"
+#include "../hpp/JogoDoBicho.hpp"
 
 JogoDoBicho::JogoDoBicho(GraphicModule *graphicModule, RandomNumberGenerator *randomNumberGenerator, InputModule *inputModule, std::string name, double minimumBet)
     : Game(graphicModule, randomNumberGenerator, inputModule, name, minimumBet),
