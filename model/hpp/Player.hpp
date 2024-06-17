@@ -9,11 +9,11 @@ class Player {
     private:
         int id;
         string name;
-        float balance;
+        double balance;
 
     public:
         Player();
-        Player(int id, string name, float balance);
+        Player(int id, string name, double balance);
 
         void setId(int id);
         int getId();
@@ -21,8 +21,8 @@ class Player {
         void setName(string name);
         string getName();
 
-        void setBalance(float balance);
-        float getBalance();
+        void setBalance(double balance);
+        double getBalance();
 };
 
 #endif
