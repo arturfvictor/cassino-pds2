@@ -17,7 +17,7 @@ class BingoGame : public Game {
         void play(Player* player) override;
     private:
         bool DoOffer(int offer); 
-        bool verificarCartelaCompleta(const std::vector<std::string>& cartela);
+        bool verificarCartelaCompleta(const std::vector<int>& cartela);
         int makedraw(std::vector<int>& numbers);
         bool marcarNumeroNaCartela(std::vector<int>& cartela, int numero);
         bool ValidateConfirmation(string input);
