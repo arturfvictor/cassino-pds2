@@ -24,6 +24,10 @@ class GraphicModule {
 
         /// @brief Limpa a tela
         void virtual clear() = 0;
+
+        /// @brief Freezes the game for the desired time
+        /// @param millis duration in millis
+        void virtual wait(int millis) = 0;
 };
 
 #endif
