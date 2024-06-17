@@ -7,6 +7,7 @@
 #include "./module/graphic-module/hpp/CommandLineGraphicModule.hpp"
 #include "./module/random-number-generator/hpp/BasicRandomNumberGenerator.hpp"
 #include "./game/hpp/CoinFlipGame.hpp"
+#include "./game/hpp/JogodoBicho.hpp"
 #include "./dao/hpp/GenericDao.hpp"
 #include "./model/hpp/Player.hpp"
 
@@ -22,10 +23,11 @@ int main() {
 
     Player* p1 = new Player(1, "Player1", 16000.0);
 
-    Game* coinFlip = new CoinFlipGame(graphicModule, randomNumberGenerator, inputModule, "Cara ou Coroa");
-
+    Game* coinFlip = new CoinFlipGame(graphicModule, randomNumberGenerator,inputModule, "Cara ou Coroa");
+    Game* Bicho = new JogoDoBicho(graphicModule, randomNumberGenerator,inputModule, "Jogo do Bicho");
     vector<Game*> games;
     games.push_back(coinFlip);
+    games.push_back(Bicho);
 
     while (true) {
         showGameMenu(graphicModule, games);
