@@ -11,22 +11,23 @@
 
 using std::string;
 
-class BingoGame : public Game {
-    public:
-        BingoGame(GraphicModule* graphicModule, RandomNumberGenerator* randomNumberGenerator, InputModule* inputModule, string name, double minimum_bet);
-        void play(Player* player) override;
-    private:
-        bool DoOffer(int offer); 
-        bool verificarCartelaCompleta(const std::vector<int>& cartela);
-         bool HasCommonNumber(const std::vector<int>& cartela, const std::vector<int>& old_numbers);
-        int makedraw(std::vector<int>& numbers);
-        bool MarkPlayerCard(std::vector<int>& card, int number);
-        bool ValidateConfirmation(string input);
-        void ValidatePlayerCard(int ramdomnumber, std::vector<int>& cartela);
-        void GenerateCard(std::vector<int>& cartela);
-        void printCard(const std::vector<int>& cartela);
-        void showGameHeader(string name, float balance);
-        bool validateInput(int option);
+class BingoGame : public Game
+{
+public:
+    BingoGame(GraphicModule *graphicModule, RandomNumberGenerator *randomNumberGenerator, InputModule *inputModule, string name, double minimum_bet);
+    void play(Player *player) override;
+
+private:
+    bool DoOffer(int offer);
+    bool verificarCartelaCompleta(const std::vector<int> &cartela);
+    bool HasCommonNumber(const std::vector<int> &cartela, const std::vector<int> &old_numbers);
+    int makedraw(std::vector<int> &numbers);
+    bool MarkPlayerCard(std::vector<int> &card, int number);
+    bool ValidateConfirmation(string input);
+    void ValidatePlayerCard(int ramdomnumber, std::vector<int> &cartela);
+    void GenerateCard(std::vector<int> &cartela);
+    void printCard(const std::vector<int> &cartela);
+    bool validateInput(int option);
 };
 
 #endif
