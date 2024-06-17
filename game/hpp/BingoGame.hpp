@@ -19,11 +19,11 @@ class BingoGame : public Game {
         bool DoOffer(int offer); 
         bool verificarCartelaCompleta(const std::vector<std::string>& cartela);
         int makedraw(std::vector<int>& numbers);
-        bool marcarNumeroNaCartela(std::vector<std::string>& cartela, int numero);
-        bool ValidateConfirmation(char *input);
-        void ValidatePlayerCard(int ramdomnumber, std::vector<std :: string>& cartela);
-        void GenerateCard(std::vector<std::string>& cartela);
-        void printCard(const std::vector<std::string>& cartela);
+        bool marcarNumeroNaCartela(std::vector<int>& cartela, int numero);
+        bool ValidateConfirmation(string input);
+        void ValidatePlayerCard(int ramdomnumber, std::vector<int>& cartela);
+        void GenerateCard(std::vector<int>& cartela);
+        void printCard(const std::vector<int>& cartela);
         void showGameHeader(string name, float balance);
         bool validateInput(int option);
 };

@@ -24,7 +24,7 @@ int BingoGame::makedraw(std::vector<int>& numbers){
     int number;
     static int cont = 0;
     number = this->randomNumberGenerator->generate(1,75);
-    for (const int& num : numbers) {
+    for (int num : numbers) {
         if (num == number) {
             makedraw(numbers);
             cont++;
@@ -37,7 +37,7 @@ int BingoGame::makedraw(std::vector<int>& numbers){
     return number;
 }
 
-bool BingoGame::ValidateConfirmation(char *input){
+bool BingoGame::ValidateConfirmation(string input){
     if (input == "S" || input == "s" || input == "sim" ||input == "N" || input == "n" || input == "nao") {
         return true;
     }
@@ -47,45 +47,43 @@ bool BingoGame::ValidateConfirmation(char *input){
 
 }
 
-void BingoGame::GenerateCard(std::vector<std::string>& cartela) {
-    for (int i = 0; i < 24; ++i) {
+void BingoGame::GenerateCard(std::vector<int>& cartela) {
+    for (int i = 0; i < 25; ++i) {
         int num;
-        do {
-            num = rand() % 75 + 1; // Números de 1 a 75
-        } while (std::find(cartela.begin(), cartela.end(), num) != cartela.end());
-        cartela[i] = (num < 10 ? "0" : "") + std::to_string(num); // Garantir duas posições
+        num = randomNumberGenerator ->generate(1,75);
+       cartela[i] = num;
     }
 }
 
-void BingoGame:: printCard(const std::vector<std::string>& cartela) {
-    for (int i = 0; i < 24; ++i) {
+void BingoGame:: printCard(const std::vector<int>& cartela) {
+    for (int i = 0; i < cartela.size(); ++i) {
         std::cout << std::setw(3) << cartela[i] << " ";
         if ((i + 1) % 5 == 0)
             std::cout << std::endl;
     }
 }
 
-void BingoGame::ValidatePlayerCard(int ramdomnumber, std::vector<std ::string>& cartela){
+void BingoGame::ValidatePlayerCard(int ramdomnumber, std::vector<int>& cartela){
         this->graphicModule->clear();
-        char char_input;
-        this->graphicModule->print("O numero" + std::to_string(ramdomnumber) + "está na sua cartela? ", 25, false, false);
-        scanf("%c", &char_input);
-         bool validation;
-         while(validation == true){
-            validation = ValidateConfirmation(&char_input);
+        string char_input;
+        this->graphicModule->print("O numero " + std::to_string(ramdomnumber) + " está na sua cartela? ", 25, false, false);
+        char_input = inputModule->readString("");
+         bool validation = false;
+         while(validation == false){
+            validation = ValidateConfirmation(char_input);
             this->graphicModule->clear();
          }
         if(validation == true){
-            if(&char_input == "sim" || &char_input == "S" || &char_input == "s"){
+            if(char_input == "sim" || char_input == "S" || char_input == "s"){
                 this->graphicModule->println("digite o numero: ", 25, false, false);
                 int card_number;
-                scanf("%d", &card_number);
-                if (marcarNumeroNaCartela(cartela,card_number))
+                card_number = inputModule->readInt("");
+                if (marcarNumeroNaCartela(cartela,card_number) == true)
                 {
-                    std::cout << "Número " << card_number << " marcado na cartela." << std::endl;
+                    this->graphicModule->print("Número " + std::to_string(card_number)+ " marcado na cartela.", 25, false, false);
                     printCard(cartela);
                  } else {
-                std::cout << "Número não está na sua cartela." << std::endl;
+                this->graphicModule->println("Número não está na sua cartela.", 25, false, false);
                 printCard(cartela);
                }
                 
@@ -97,14 +95,14 @@ void BingoGame::ValidatePlayerCard(int ramdomnumber, std::vector<std ::string>& 
 
 }
 
-bool BingoGame :: verificarCartelaCompleta(const std::vector<std::string>& cartela) {
-    for (const auto& num : cartela) {
-        if (num != "XX") {
+/*bool BingoGame :: verificarCartelaCompleta(const std::vector<int>& cartela) {
+    for (int num : cartela) {
+        if (num != "-1") {
             return false;
         }
     }
     return true;
-}
+}*/
 
 bool BingoGame:: DoOffer(int offer){
 
@@ -116,13 +114,13 @@ bool BingoGame:: DoOffer(int offer){
         }
 }
 
-bool BingoGame:: marcarNumeroNaCartela(std::vector<std::string>& cartela, int numero) {
+bool BingoGame:: marcarNumeroNaCartela(std::vector<int>& cartela, int numero) {
     bool marcado = false;
-    std::string numeroStr = (numero < 10 ? "0" : "") + std::to_string(numero);
-    for (int i = 0; i < 24; ++i) {
-        if (cartela[i] == numeroStr) {
-            cartela[i] = "XX"; // Marcar o número com 'XX'
+    for (int i = 0; i < cartela.size(); ++i) {
+        if (cartela[i] == numero) {
+            cartela[i] = 0; // Marcar o número com -1 (ou outro valor que indique marcação)
             marcado = true;
+            break; // Encerra o loop assim que o número for marcado
         }
     }
     return marcado;
@@ -131,39 +129,38 @@ bool BingoGame:: marcarNumeroNaCartela(std::vector<std::string>& cartela, int nu
 void BingoGame::play(Player* player){
     
     
-    std::vector<std::string> playercard(24);
+    std::vector<int> playercard(25);
     std::vector<int> old_numbers(75);
-    bool player_offer;
+
+    bool player_offer = false;
     bool player_lose = false;
     int offer;
+    int ramdomnumber = 0;
 
     showGameHeader(player->getName(), player -> getBalance());
 
     while(player_offer == false){
         this->graphicModule->clear();
         this->graphicModule->println("Faça sua aposta:", 25, true, false);
-        scanf("%d", &offer);
-       player_offer = DoOffer(offer);
+        offer = inputModule->readInt("");
+        player_offer = DoOffer(offer);
     }
 
     GenerateCard(playercard);
     this->graphicModule->println("Aqui está sua cartela", 25, true, false);
     printCard(playercard);
-
-
-    while(verificarCartelaCompleta(playercard) == false || player_lose == false){
-        int ramdomnumber = makedraw(old_numbers);
-
+    while(/*verificarCartelaCompleta(playercard) == false || player_lose == false*/ 1){
+        ramdomnumber = makedraw(old_numbers);
         if(ramdomnumber = 0){
                 this->graphicModule->println("Bingo Finalizado", 25, true, false);
                 player_lose = true;
         }
 
-        old_numbers.push_back(ramdomnumber);
-
-        this->graphicModule->println("Numero sorteado: " + std::to_string(ramdomnumber), 25, true, false);
+        this->graphicModule->print("Numero sorteado: " + std::to_string(ramdomnumber), 25, true, false);
 
         ValidatePlayerCard(ramdomnumber, playercard);
+
+        old_numbers.push_back(ramdomnumber);
 
         this->graphicModule->clear();
     }
@@ -173,10 +170,10 @@ void BingoGame::play(Player* player){
             player ->setBalance(final_balance - offer);
             return;
     }
-    if(verificarCartelaCompleta(playercard)){
+    /*if(verificarCartelaCompleta(playercard)){
             this->graphicModule->println("YOU WIN!!!", 25, true, false);
             int final_balance = player -> getBalance();
             player ->setBalance(final_balance + offer);
             return;  
-    }
+    }*/
 }   
