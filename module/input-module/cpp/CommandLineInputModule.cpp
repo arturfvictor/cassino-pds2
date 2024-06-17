@@ -11,11 +11,13 @@ int CommandLineInputModule::readInt(string text) {
     int tries = 0;
     while(tries < 3) {
         graphicModule->print(text, 80, false, false);
+        
 
         try {
             return readInt();
         } catch (const std::invalid_argument &e) {
             graphicModule->println(e.what(), 80, false, false);
+           
         }
 
         tries++;
@@ -37,6 +39,7 @@ int CommandLineInputModule::readIntInRange(string text, int start, int end) {
             return input;
         } catch (const std::invalid_argument &e) {
             graphicModule->println(e.what(), 80, false, false);
+            
         }
     }
     throw std::invalid_argument("Excedido o número de tentativas!");
@@ -129,6 +132,7 @@ string CommandLineInputModule::readString(string text) {
             std::getline(cin, ignore);
 
             graphicModule->println("Entrada inválida, tente novamente. (Tipo esperado: string)", 80, true, true);
+            
             continue;
         }
 
