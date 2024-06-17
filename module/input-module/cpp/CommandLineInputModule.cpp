@@ -8,6 +8,7 @@ CommandLineInputModule::CommandLineInputModule(GraphicModule* graphicModule): In
 }
 
 int CommandLineInputModule::readInt(string text) {
+    cin.clear();
     int tries = 0;
     while(tries < 3) {
         graphicModule->print(text, 80, false, false);
@@ -24,6 +25,7 @@ int CommandLineInputModule::readInt(string text) {
 }
 
 int CommandLineInputModule::readIntInRange(string text, int start, int end) {
+    cin.clear();
     int tries = 0;
     while(tries < 3) {
         try {
@@ -43,6 +45,7 @@ int CommandLineInputModule::readIntInRange(string text, int start, int end) {
 }
 
 int CommandLineInputModule::readInt() {
+    cin.clear();
     int input;
     cin >> input;
 
@@ -59,7 +62,8 @@ int CommandLineInputModule::readInt() {
 }
 
 double CommandLineInputModule::readDouble(string text) {
-   int tries = 0;
+    cin.clear();
+    int tries = 0;
     while(tries < 3) {
         graphicModule->print(text, 80, false, false);
 
@@ -75,6 +79,7 @@ double CommandLineInputModule::readDouble(string text) {
 }
 
 double CommandLineInputModule::readDoubleInRange(string text, double start, double end) {
+    cin.clear();
     int tries = 0;
     while(tries < 3) {
         try {
@@ -94,6 +99,7 @@ double CommandLineInputModule::readDoubleInRange(string text, double start, doub
 }
 
 double CommandLineInputModule::readDouble() {
+    cin.clear();
     double input;
     cin >> input;
 
@@ -111,6 +117,7 @@ double CommandLineInputModule::readDouble() {
 
 
 string CommandLineInputModule::readString(string text) {
+    cin.clear();
     int tries = 0;
     while(tries < 3) {
         tries++;
@@ -122,7 +129,6 @@ string CommandLineInputModule::readString(string text) {
         cin >> input;
 
         if (cin.fail()) {
-
             // reseting cin state
             cin.clear();
             string ignore;

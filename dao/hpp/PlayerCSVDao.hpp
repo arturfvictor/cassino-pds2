@@ -5,6 +5,7 @@
 #include <vector>
 
 #include "./PlayerMapDao.hpp"
+#include "../../module/random-number-generator/hpp/RandomNumberGenerator.hpp"
 
 using std::map;
 using std::vector;
@@ -12,7 +13,7 @@ using std::fstream;
 
 class PlayerCSVDao : public PlayerDao {
     private:
-        PlayerMapDao playerMapDao;
+        vector<Player*> players;
         void writeToFile();
 
     public:
