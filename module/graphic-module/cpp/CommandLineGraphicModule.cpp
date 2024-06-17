@@ -52,6 +52,10 @@ void CommandLineGraphicModule::clear() {
     #endif
 }
 
+void CommandLineGraphicModule::wait(int millis) {
+    sleep_for(milliseconds(millis));
+}
+
 void CommandLineGraphicModule::enableTextFormatting(bool bold, bool underline) {
     if (bold) {
         cout << "\e[1m";

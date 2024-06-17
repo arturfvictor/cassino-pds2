@@ -16,8 +16,8 @@ using std::flush;
 using namespace std::chrono;
 using namespace std::this_thread;
 
-BingoGame::BingoGame(GraphicModule* graphicModule, RandomNumberGenerator* randomNumberGenerator, InputModule* inputModule, string name):
- Game(graphicModule, randomNumberGenerator, inputModule, name) {}
+BingoGame::BingoGame(GraphicModule* graphicModule, RandomNumberGenerator* randomNumberGenerator, InputModule* inputModule, string name, double minimum_bet):
+ Game(graphicModule, randomNumberGenerator, inputModule, name, minimum_bet) {}
 
 /**
  * @brief Mensagem inicial do jogo BINGO

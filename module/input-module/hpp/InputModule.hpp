@@ -30,6 +30,13 @@ class InputModule {
         /// @throws `invalid_argument` - Caso aconteçam 3 tentativas falhas de leitura 
         virtual double readDouble(string text) = 0;
 
+        /// @brief Lê um double do teclado e valida se ele está dentro da faixa
+        /// @param text Texto que deve ser mostrado em tela antes da leitura
+        /// @param start Começo da faixa
+        /// @param end Fim da faixa
+        /// @return O double lido
+        virtual double readDoubleInRange(string text, double start, double end) = 0;
+
         /// @brief Lê uma string do teclado
         /// @param text Texto que deve ser mostrado em tela antes da leitura
         /// @return A string lida

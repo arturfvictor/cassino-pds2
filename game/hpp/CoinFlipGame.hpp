@@ -12,11 +12,11 @@ using std::string;
 
 class CoinFlipGame : public Game {
     public:
-        CoinFlipGame(GraphicModule* graphicModule, RandomNumberGenerator* randomNumberGenerator, InputModule* inputModule, string name);
+        CoinFlipGame(GraphicModule* graphicModule, RandomNumberGenerator* randomNumberGenerator, InputModule* inputModule, string name, double minimumBet);
         void play(Player* player) override;
     private:
-        void showGameHeader(string name, float balance);
-        bool validateInput(int option);
+        double readBet(double minimumBet, double balance);
+        void printOption(int option);
 };
 
 #endif

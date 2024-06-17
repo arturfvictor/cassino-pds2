@@ -12,17 +12,23 @@ using std::string;
 class Game {
     private:
         string name;
+        double minimumBet;
     protected:
         GraphicModule* graphicModule;
         RandomNumberGenerator* randomNumberGenerator;
         InputModule* inputModule;
     public:
-        Game(GraphicModule* graphicModule, RandomNumberGenerator* randomNumberGenerator, InputModule* inputModule, string name);
+        Game(GraphicModule* graphicModule, RandomNumberGenerator* randomNumberGenerator, InputModule* inputModule, string name, double minimumBet);
 
         virtual void play(Player* player) = 0;
 
+        void showGameHeader(string name, double balance);
+
         void setName(string name);
         string getName();
+
+        void setMinimumBet(double minumumBet);
+        double getMinimumBet();
 };
 
 #endif

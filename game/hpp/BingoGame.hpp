@@ -13,7 +13,7 @@ using std::string;
 
 class BingoGame : public Game {
     public:
-        BingoGame(GraphicModule* graphicModule, RandomNumberGenerator* randomNumberGenerator, InputModule* inputModule, string name);
+        BingoGame(GraphicModule* graphicModule, RandomNumberGenerator* randomNumberGenerator, InputModule* inputModule, string name, double minimum_bet);
         void play(Player* player) override;
     private:
         bool DoOffer(int offer); 
