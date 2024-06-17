@@ -16,7 +16,9 @@ class BingoGame : public Game {
         BingoGame(GraphicModule* graphicModule, RandomNumberGenerator* randomNumberGenerator, InputModule* inputModule, string name);
         void play(Player* player) override;
     private:
-        int makedraw();
+        bool DoOffer(); 
+        bool verificarCartelaCompleta(const std::vector<std::string>& cartela);
+        int makedraw(std::vector<int>& numbers);
         bool marcarNumeroNaCartela(std::vector<std::string>& cartela, int numero);
         bool ValidateConfirmation(char *input);
         void ValidatePlayerCard(int ramdomnumber, std::vector<std :: string>& cartela);
