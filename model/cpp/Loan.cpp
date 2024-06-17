@@ -3,14 +3,14 @@
 Loan::Loan() {
 }
 
-Loan::Loan(float amount, int totalRounds): amount(amount), totalRounds(totalRounds) {
+Loan::Loan(double amount, int totalRounds): amount(amount), totalRounds(totalRounds) {
 }
 
-void Loan::setAmount(float amount) {
+void Loan::setAmount(double amount) {
     this->amount = amount;
 }
 
-float Loan::getAmount() {
+double Loan::getAmount() {
     return this->amount;
 }
 
