@@ -14,7 +14,7 @@ BingoGame::BingoGame(GraphicModule* graphicModule, RandomNumberGenerator* random
 
 void BingoGame::showGameHeader(string name, float balance) {
     this->graphicModule->clear();
-    this->graphicModule->print("BEM VINDO AO BINGO", 25, false, false);
+    this->graphicModule->println("BEM VINDO AO BINGO", 25, false, false);
     this->graphicModule->print("Saldo Atual: ", 25, false, false);
     this->graphicModule->println("R$ " + std::to_string(balance), 25, true, false);
     this->graphicModule->println("Aposta Mínima: R$ 70", 25, false, false);
@@ -66,7 +66,7 @@ void BingoGame:: printCard(const std::vector<int>& cartela) {
 void BingoGame::ValidatePlayerCard(int ramdomnumber, std::vector<int>& cartela){
         this->graphicModule->clear();
         string char_input;
-        this->graphicModule->print("O numero " + std::to_string(ramdomnumber) + " está na sua cartela? ", 25, false, false);
+        this->graphicModule->print("O numero " + std::to_string((float)ramdomnumber) + " está na sua cartela? ", 25, false, false);
         char_input = inputModule->readString("");
          bool validation = false;
          while(validation == false){
@@ -156,8 +156,8 @@ void BingoGame::play(Player* player){
                 player_lose = true;
         }
 
-        this->graphicModule->print("Numero sorteado: " + std::to_string(ramdomnumber), 25, true, false);
-
+        this->graphicModule->print("Numero sorteado: ", 25, true, false);
+        this->graphicModule->print(std::to_string((float)ramdomnumber), 25, true, false);
         ValidatePlayerCard(ramdomnumber, playercard);
 
         old_numbers.push_back(ramdomnumber);
