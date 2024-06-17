@@ -11,7 +11,7 @@ using std::string;
 using std::to_string;
 using std::vector;
 
-BlackJack::BlackJack(GraphicModule *graphicModule, RandomNumberGenerator *randomNumberGenerator, InputModule *inputModule, string name) : Game(graphicModule, randomNumberGenerator, inputModule, name) {}
+BlackJack::BlackJack(GraphicModule *graphicModule, RandomNumberGenerator *randomNumberGenerator, InputModule *inputModule, string name, double minimumBet) : Game(graphicModule, randomNumberGenerator, inputModule, name, minimumBet) {}
 
 void BlackJack::initiateCards()
 {

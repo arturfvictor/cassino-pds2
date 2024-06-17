@@ -14,7 +14,7 @@ class BlackJack : public Game {
     vector<string> suits;
 
     public:
-    BlackJack(GraphicModule* graphicModule, RandomNumberGenerator* randomNumberGenerator, InputModule* inputModule, string name);
+    BlackJack(GraphicModule* graphicModule, RandomNumberGenerator* randomNumberGenerator, InputModule* inputModule, string name, double minimumBet);
     void initiateCards();
     void initiateSuits();
     vector<string> generateSuitvector(string suit);

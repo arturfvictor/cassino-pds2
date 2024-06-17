@@ -1,20 +1,22 @@
-#ifndef PLAYERMARIADBDAO
-#define PLAYERMARIADBDAO
+#ifndef PLAYERCSVDAO
+#define PLAYERCSVDAO
 
 #include <map>
 #include <vector>
 
-#include "./PlayerDao.hpp"
+#include "./PlayerMapDao.hpp"
 
 using std::map;
 using std::vector;
+using std::fstream;
 
-class PlayerMariaDBDao : public PlayerDao {
+class PlayerCSVDao : public PlayerDao {
     private:
-        map<int, Player*> players;
+        PlayerMapDao playerMapDao;
+        void writeToFile();
 
     public:
-        PlayerMariaDBDao();
+        PlayerCSVDao();
         vector<Player*> list() override;
         Player* find(int id) override;
         Player* save(Player* object) override;

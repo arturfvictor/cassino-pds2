@@ -1,5 +1,3 @@
 #include "../hpp/PlayerDao.hpp"
 
-PlayerDao::PlayerDao(): GenericDao<Player>() {
-    
-};
+PlayerDao::PlayerDao(): GenericDao<Player>() {};

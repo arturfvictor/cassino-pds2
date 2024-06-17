@@ -1,0 +1,12 @@
+# ninja log v6
+1	56	1718597993512898015	CMakeFiles/cassino_royale.dir/model/cpp/Loan.cpp.o	52b4efcb7786200f
+1	648	1718597993512898015	CMakeFiles/cassino_royale.dir/module/graphic-module/cpp/CommandLineGraphicModule.cpp.o	b1596a251e3aa11b
+2	739	1718597993512898015	CMakeFiles/cassino_royale.dir/module/random-number-generator/cpp/BasicRandomNumberGenerator.cpp.o	58c403d1c198be0
+1	306	1718597993512898015	CMakeFiles/cassino_royale.dir/model/cpp/Player.cpp.o	569271763b9577be
+1	358	1718597993512898015	CMakeFiles/cassino_royale.dir/game/cpp/Game.cpp.o	4724e73ad6790f9e
+3	404	1718597993512898015	CMakeFiles/cassino_royale.dir/game/blackjack/blackjack_cpp/playerBlackjack.cpp.o	c71d5b8a1dff49ec
+0	461	1718597993512898015	CMakeFiles/cassino_royale.dir/game/cpp/CoinFlipGame.cpp.o	25a4a5e9c4e11791
+2	519	1718597993512898015	CMakeFiles/cassino_royale.dir/module/input-module/cpp/CommandLineInputModule.cpp.o	dc3f57a58c311776
+2	647	1718597993512898015	CMakeFiles/cassino_royale.dir/game/blackjack/blackjack_cpp/hand.cpp.o	a33632b10db1a38d
+4	717	1718597993516898073	CMakeFiles/cassino_royale.dir/main.cpp.o	b407e4072c728899
+2	788	1718597993512898015	CMakeFiles/cassino_royale.dir/game/blackjack/blackjack_cpp/blackJack.cpp.o	3d261c03fe06b35b
