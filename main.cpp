@@ -8,6 +8,7 @@
 #include "./module/graphic-module/hpp/CommandLineGraphicModule.hpp"
 #include "./module/random-number-generator/hpp/BasicRandomNumberGenerator.hpp"
 #include "./game/hpp/CoinFlipGame.hpp"
+#include "./game/hpp/JogoDoBicho.hpp"
 #include "./game/blackjack/blackjack_hpp/blackJack.hpp"
 #include "./model/hpp/Player.hpp"
 
@@ -64,11 +65,13 @@ int main() {
     }
 
     Game* coinFlip = new CoinFlipGame(graphicModule, randomNumberGenerator, inputModule, "Cara ou Coroa", 50.0);
-    Game* blackJack = new BlackJack(graphicModule, randomNumberGenerator, inputModule, "Black Jack", 50.0);
+    Game* blackJack = new BlackJack(graphicModule, randomNumberGenerator, inputModule, "Black Jack", 100.0);
+    Game* bicho = new JogoDoBicho(graphicModule, randomNumberGenerator, inputModule, "Jogo do Bicho", 120);
 
     vector<Game*> games;
     games.push_back(coinFlip);
     games.push_back(blackJack);
+    games.push_back(bicho);
 
     while (true) {
         showGameMenu(graphicModule, games, player->getName(), player->getBalance());

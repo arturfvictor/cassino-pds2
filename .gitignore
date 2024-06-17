@@ -36,3 +36,5 @@
 
 # CMake build files
 build/*
+
+save.csv
