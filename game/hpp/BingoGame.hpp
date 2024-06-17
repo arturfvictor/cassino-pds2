@@ -20,7 +20,7 @@ class BingoGame : public Game {
         bool verificarCartelaCompleta(const std::vector<int>& cartela);
          bool HasCommonNumber(const std::vector<int>& cartela, const std::vector<int>& old_numbers);
         int makedraw(std::vector<int>& numbers);
-        bool marcarNumeroNaCartela(std::vector<int>& cartela, int numero);
+        bool MarkPlayerCard(std::vector<int>& card, int number);
         bool ValidateConfirmation(string input);
         void ValidatePlayerCard(int ramdomnumber, std::vector<int>& cartela);
         void GenerateCard(std::vector<int>& cartela);
