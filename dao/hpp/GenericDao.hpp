@@ -14,8 +14,6 @@ class GenericDao {
         virtual T* find(int id) = 0;
         virtual T* save(T* object) = 0;
         virtual T* remove(int id) = 0;
-    protected:
-        virtual int generateUniqueId() = 0;
 };
 
 #endif

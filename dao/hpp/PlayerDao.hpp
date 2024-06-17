@@ -7,9 +7,6 @@
 class PlayerDao : public GenericDao<Player> {
     public:
         PlayerDao();
-    protected:
-        int generateUniqueId() override;
-
 };
 
 #endif
