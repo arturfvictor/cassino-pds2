@@ -1,43 +1,43 @@
 #include "JogoDoBicho.hpp"
 
-JogoDoBicho::JogoDoBicho(GraphicModule *graphicModule, RandomNumberGenerator *randomNumberGenerator, InputModule *inputModule, string name) : Game(graphicModule, randomNumberGenerator, inputModule, name)
+JogoDoBicho::JogoDoBicho(GraphicModule *graphicModule, RandomNumberGenerator *randomNumberGenerator, InputModule *inputModule, std::string name, double minimumBet)
+    : Game(graphicModule, randomNumberGenerator, inputModule, name, minimumBet),
+      animais{
+          {"Avestruz", 1},
+          {"Águia", 2},
+          {"Burro", 3},
+          {"Borboleta", 4},
+          {"Cachorro", 5},
+          {"Cabra", 6},
+          {"Carneiro", 7},
+          {"Camelo", 8},
+          {"Cobra", 9},
+          {"Coelho", 10},
+          {"Cavalo", 11},
+          {"Elefante", 12},
+          {"Galo", 13},
+          {"Gato", 14},
+          {"Jacaré", 15},
+          {"Leão", 16},
+          {"Macaco", 17},
+          {"Porco", 18},
+          {"Pavão", 19},
+          {"Peru", 20},
+          {"Touro", 21},
+          {"Tigre", 22},
+          {"Urso", 23},
+          {"Veado", 24},
+          {"Vaca", 25}},
+      modosdeaposta{
+          {"Animal"},
+          {"Dezena"}}
 {
-    // Inicializar a lista de animais diretamente no código
-    animais = {
-        {"Avestruz", 1},
-        {"Águia", 2},
-        {"Burro", 3},
-        {"Borboleta", 4},
-        {"Cachorro", 5},
-        {"Cabra", 6},
-        {"Carneiro", 7},
-        {"Camelo", 8},
-        {"Cobra", 9},
-        {"Coelho", 10},
-        {"Cavalo", 11},
-        {"Elefante", 12},
-        {"Galo", 13},
-        {"Gato", 14},
-        {"Jacaré", 15},
-        {"Leão", 16},
-        {"Macaco", 17},
-        {"Porco", 18},
-        {"Pavão", 19},
-        {"Peru", 20},
-        {"Touro", 21},
-        {"Tigre", 22},
-        {"Urso", 23},
-        {"Veado", 24},
-        {"Vaca", 25}};
-
-    modosdeaposta = {{"Animal", 1},
-                     {"Dezena", 2},
-                     {"Centena", 3}};
-};
+    // O corpo do construtor pode estar vazio
+}
 
 void JogoDoBicho::play(Player *player)
 {
-
+float odd = 1;
     bool firstExec = true;
     bool inputValidation;
 
@@ -48,25 +48,76 @@ void JogoDoBicho::play(Player *player)
     int pos = 0;
     for (const auto &aposta : modosdeaposta)
     {
-        string string_aux = aposta.first;
+        string string_aux = aposta;
         this->graphicModule->println(std::to_string(pos) + " - " + string_aux, 10, false, true);
         pos++;
     }
 
-    int ApostaEscolhida = inputModule->readIntInRange("", 0, modosdeaposta.size() - 1);
-    if (ApostaEscolhida == 0)
+    int NumbertipoSorteio = inputModule->readIntInRange("", 0, modosdeaposta.size() - 1);
+
+    if (NumbertipoSorteio == 0)
     {
-        ApostarAnimal();
+        tipoSorteio = "Animal";
+        odd = 18;
     }
-    else if (ApostaEscolhida == 1)
+    else if (NumbertipoSorteio == 1)
     {
-        ApostarDezena();
+        tipoSorteio = "Dezena";
+        odd = 80;
     }
-    else if (ApostaEscolhida == 2)
+    else
     {
-        // ApostarCentena();
+        this->graphicModule->println("Opcao Invalida", 100, true, true);
     }
-    this->graphicModule->println(std::to_string(ApostaEscolhida), 25, true, false);
+    this->graphicModule->println("Tipo Sorteio: " + tipoSorteio, 25, true, false);
+    double bet = readBet(getMinimumBet(), player->getBalance());
+    mostrarAnimal();
+    string animalEscolhido = inputModule->readString(""); // Solicita a escolha do animal
+    int numeroAnimal = escolherAnimal(animalEscolhido);
+    // string tiposorteio = inputModule->readString("Iniciar Sorteio? Sim ou Nao: ");
+    if (numeroAnimal != -1)
+    {
+        this->graphicModule->println("Número do animal escolhido: " + std::to_string(numeroAnimal), 25, true, false);
+        string iniciarSorteio = inputModule->readString("Iniciar Sorteio? Sim ou Nao: ");
+        if (iniciarSorteio == "Sim" || iniciarSorteio == "sim")
+        {
+            // Pergunta se é dezena ou animal
+            // string tipoSorteio = inputModule->readString("Deseja sortear por Dezena ou Animal? ");
+            this->graphicModule->println("Tipo Sorteio: " + tipoSorteio, 25, true, false);
+
+            graphicModule->println("Sorteando........", 35, false, false);
+            graphicModule->wait(750);
+            graphicModule->clear();
+            bool resultado = sorteio(tipoSorteio, numeroAnimal);
+            if (resultado)
+            {
+                double balance = player->getBalance();
+                player->setBalance(balance + (bet * odd));
+
+                graphicModule->println("VOCE GANHOU " + std::to_string(bet) + "!", 80, true, false);
+                graphicModule->println("Novo saldo: R$", 80, false, false);
+                graphicModule->println(std::to_string(player->getBalance()), 80, true, false);
+            }
+            else
+            {
+                double balance = player->getBalance();
+                player->setBalance(balance - bet);
+
+                graphicModule->print("EU...EU...EU...Você se...", 25, false, false);
+                graphicModule->println("Perdeu!", 25, true, false);
+                graphicModule->print("Novo saldo: R$", 80, false, false);
+                graphicModule->println(std::to_string(player->getBalance()), 80, true, false);
+            }
+            graphicModule->wait(1250);
+            graphicModule->clear();
+        }
+    }
+    else
+    {
+        this->graphicModule->println("Animal escolhido não encontrado.", 25, true, false);
+    }
+
+    // this->graphicModule->println(std::to_string(ApostaEscolhida), 25, true, false);
     /*
         string animalEscolhido;
         std::cin >> animalEscolhido;
@@ -90,8 +141,8 @@ void JogoDoBicho::mostrarAnimal()
     this->graphicModule->clear();
     this->graphicModule->print("Escolha um animal para apostar:\n", 14, false, true);
 
-    int rows = 4;        // Número de linhas
-    int cols = 6;        // Número de colunas
+    int rows = 5;        // Número de linhas
+    int cols = 5;        // Número de colunas
     int animalIndex = 0; // Índice do animal na lista
 
     // Adiciona margem superior
@@ -127,56 +178,22 @@ void JogoDoBicho::mostrarAnimal()
     this->graphicModule->println("", 25, true, false);
 }
 
-void JogoDoBicho::ApostarAnimal()
-{
-    mostrarAnimal();
-    string animalEscolhido = inputModule->readString(""); // Solicita a escolha do animal
-    int numeroAnimal = escolherAnimal(animalEscolhido);
-
-    if (numeroAnimal != -1)
-    {
-        this->graphicModule->println("Número do animal escolhido: " + std::to_string(numeroAnimal), 25, true, false);
-
-        // Introduzindo a pergunta para iniciar o sorteio
-        string iniciarSorteio = inputModule->readString("Iniciar Sorteio? Sim ou Nao: ");
-        if (iniciarSorteio == "Sim" || iniciarSorteio == "sim")
-        {
-            // Pergunta se é dezena ou animal
-            string tipoSorteio = inputModule->readString("Deseja sortear por Dezena ou Animal? ");
-
-            bool resultado = sorteio(tipoSorteio, numeroAnimal);
-            if (resultado)
-            {
-                this->graphicModule->println("Parabéns! Você ganhou o sorteio!", 25, true, false);
-            }
-            else
-            {
-                this->graphicModule->println("Infelizmente, você não ganhou o sorteio.", 25, true, false);
-            }
-        }
-    }
-    else
-    {
-        this->graphicModule->println("Animal escolhido não encontrado.", 25, true, false);
-    }
-}
-
 bool JogoDoBicho::sorteio(const string &tipoSorteio, int numeroEscolhido)
 {
     int numeroSorteado = randomNumberGenerator->generate(0, 99); // Gera um número aleatório entre 0 e 99
-    this->graphicModule->println("Número sorteado: " + std::to_string(numeroSorteado), 25, true, false);
 
     if (tipoSorteio == "Animal" || tipoSorteio == "animal")
     {
+        this->graphicModule->println("Número sorteado: " + std::to_string(numeroSorteado % 25), 25, true, false);
         return numeroEscolhido == (numeroSorteado % 25) + 1; // Assumindo que há 25 animais
     }
     else if (tipoSorteio == "Dezena" || tipoSorteio == "dezena")
     {
-
-        int d0 = numeroAnimal - 3;
-        int d1 = numeroAnimal - 2;
-        int d2 = numeroAnimal - 1;
-        int d3 = numeroAncd imal;
+        int DezenaEscolhida = numeroEscolhido * 4;
+        int d0 = DezenaEscolhida - 3;
+        int d1 = DezenaEscolhida - 2;
+        int d2 = DezenaEscolhida - 1;
+        int d3 = DezenaEscolhida;
 
         int dezenaEscolhida;
         this->graphicModule->clear();
@@ -185,39 +202,10 @@ bool JogoDoBicho::sorteio(const string &tipoSorteio, int numeroEscolhido)
 
         dezenaEscolhida = inputModule->readIntInRange("", d0, d3);
         this->graphicModule->println("Dezena escolhida: " + std::to_string(dezenaEscolhida), 25, true, false);
-        return numeroEscolhido == numeroSorteado;
+        this->graphicModule->println("Número sorteado: " + std::to_string(numeroSorteado), 25, true, false);
+        return dezenaEscolhida == numeroSorteado;
     }
     return false;
-}
-
-void JogoDoBicho::ApostarDezena()
-{
-
-    mostrarAnimal();
-    string animalEscolhido = inputModule->readString(""); // Solicita a escolha do animal
-    int numeroAnimal = escolherAnimal(animalEscolhido);
-
-    if (numeroAnimal != -1)
-    {
-        this->graphicModule->println("Número do animal escolhido: " + std::to_string(numeroAnimal), 25, true, false);
-    }
-    else
-    {
-        this->graphicModule->println("Animal escolhido não encontrado.", 25, true, false);
-    }
-
-    int d0 = numeroAnimal - 3;
-    int d1 = numeroAnimal - 2;
-    int d2 = numeroAnimal - 1;
-    int d3 = numeroAnimal;
-
-    int dezenaEscolhida;
-    this->graphicModule->clear();
-    this->graphicModule->println("Escolha uma dezena para apostar: ", 14, false, true);
-    this->graphicModule->println(std::to_string(d0) + " - " + std::to_string(d1) + " - " + std::to_string(d2) + " - " + std::to_string(d3), 14, false, false);
-
-    dezenaEscolhida = inputModule->readIntInRange("", d0, d3);
-    this->graphicModule->println("Dezena escolhida: " + std::to_string(dezenaEscolhida), 25, true, false);
 }
 
 int JogoDoBicho::escolherAnimal(const string &animalEscolhido)
@@ -236,13 +224,15 @@ int JogoDoBicho::escolherAnimal(const string &animalEscolhido)
     return -1; // Retorna -1 se o animal não for encontrado
 }
 
-void JogoDoBicho::showGameHeader(string name, float balance)
+double JogoDoBicho::readBet(double minimumBet, double balance)
 {
-    this->graphicModule->clear();
-    this->graphicModule->print("Olá, ", 25, false, false);
-    this->graphicModule->println(name, 25, true, false);
-    this->graphicModule->print("Saldo Atual: ", 25, false, false);
-    this->graphicModule->println("R$ " + std::to_string(balance), 25, true, false);
-    this->graphicModule->print("Aposta Mínima: ", 25, false, false);
-    this->graphicModule->println("R$ " + std::to_string(0.05 * balance), 25, true, false);
+    graphicModule->println("Caso você ganhe o retorno será de até 80X o valor apostado!", 80, true, true);
+    graphicModule->print("Insira o valor da aposta: ", 80, false, false);
+
+    double bet = inputModule->readDoubleInRange("", minimumBet, balance);
+
+    graphicModule->println("--------------------------------", 1000, true, false);
+    graphicModule->wait(750);
+
+    return bet;
 }

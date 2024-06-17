@@ -10,12 +10,12 @@ CommandLineInputModule::CommandLineInputModule(GraphicModule* graphicModule): In
 int CommandLineInputModule::readInt(string text) {
     int tries = 0;
     while(tries < 3) {
-        graphicModule->print(text, 50, true, false);
+        graphicModule->print(text, 80, false, false);
 
         try {
             return readInt();
         } catch (const std::invalid_argument &e) {
-            graphicModule->println(e.what(), 50, false, false);
+            graphicModule->println(e.what(), 80, false, false);
         }
 
         tries++;
@@ -33,10 +33,10 @@ int CommandLineInputModule::readIntInRange(string text, int start, int end) {
                 tries++;
                 throw std::invalid_argument("Entrada inválida, tente novamente. (Tipo esperado: int entre " + std::to_string(start) + " e " + std::to_string(end) + ")");
             }
-            
+
             return input;
         } catch (const std::invalid_argument &e) {
-            graphicModule->println(e.what(), 50, false, false);
+            graphicModule->println(e.what(), 80, false, false);
         }
     }
     throw std::invalid_argument("Excedido o número de tentativas!");
@@ -59,40 +59,64 @@ int CommandLineInputModule::readInt() {
 }
 
 double CommandLineInputModule::readDouble(string text) {
-    int tries = 0;
+   int tries = 0;
     while(tries < 3) {
-        tries++;
+        graphicModule->print(text, 80, false, false);
 
-        graphicModule->print(text, 50, true, true);
-        graphicModule->print(" ", 50, false, false);
-        
-        double input;
-        cin >> input;
-
-        if (cin.fail()) {
-
-            // reseting cin state
-            cin.clear();
-            string ignore;
-            std::getline(cin, ignore);
-
-            graphicModule->println("Entrada inválida, tente novamente. (Tipo esperado: double)", 50, true, true);
-            continue;
+        try {
+            return readDouble();
+        } catch (const std::invalid_argument &e) {
+            graphicModule->println(e.what(), 80, false, false);
         }
 
-        return input;
+        tries++;
     }
-
     throw std::invalid_argument("Excedido o número de tentativas!");
 }
+
+double CommandLineInputModule::readDoubleInRange(string text, double start, double end) {
+    int tries = 0;
+    while(tries < 3) {
+        try {
+            double input = readDouble();
+
+            if (input < start || input > end) {
+                tries++;
+                throw std::invalid_argument("Entrada inválida, tente novamente. (Tipo esperado: double entre " + std::to_string(start) + " e " + std::to_string(end) + ")");
+            }
+
+            return input;
+        } catch (const std::invalid_argument &e) {
+            graphicModule->println(e.what(), 80, false, false);
+        }
+    }
+    throw std::invalid_argument("Excedido o número de tentativas!");
+}
+
+double CommandLineInputModule::readDouble() {
+    double input;
+    cin >> input;
+
+    if (cin.fail()) {
+        // reseting cin state
+        cin.clear();
+        string ignore;
+        std::getline(cin, ignore);
+
+        throw std::invalid_argument("Entrada inválida, tente novamente. (Tipo esperado: double)");
+    }
+
+    return input;
+}
+
 
 string CommandLineInputModule::readString(string text) {
     int tries = 0;
     while(tries < 3) {
         tries++;
 
-        graphicModule->print(text, 50, true, true);
-        graphicModule->print(" ", 50, false, false);
+        graphicModule->print(text, 80, false, true);
+        graphicModule->print(" ", 80, false, false);
         
         string input;
         cin >> input;
@@ -104,7 +128,7 @@ string CommandLineInputModule::readString(string text) {
             string ignore;
             std::getline(cin, ignore);
 
-            graphicModule->println("Entrada inválida, tente novamente. (Tipo esperado: string)", 50, true, true);
+            graphicModule->println("Entrada inválida, tente novamente. (Tipo esperado: string)", 80, true, true);
             continue;
         }
 

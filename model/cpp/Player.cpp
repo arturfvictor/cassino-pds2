@@ -3,7 +3,7 @@
 Player::Player() {
 };
 
-Player::Player(int id, string name, float balance) {
+Player::Player(int id, string name, double balance) {
     this->id = id;
     this->name = name;
     this->balance = balance;
@@ -25,10 +25,10 @@ string Player::getName() {
     return this->name;
 }
 
-void Player::setBalance(float balance) {
+void Player::setBalance(double balance) {
     this->balance = balance;
 }
 
-float Player::getBalance() {
+double Player::getBalance() {
     return this->balance;
 }

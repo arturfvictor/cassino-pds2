@@ -9,24 +9,24 @@
 #include "../../module/graphic-module/hpp/GraphicModule.hpp"
 #include "../../module/random-number-generator/hpp/RandomNumberGenerator.hpp"
 
+using std::pair; // Adicionado
 using std::string;
 using std::vector;
-using std::pair; // Adicionado
 
-class JogoDoBicho : public Game {
+class JogoDoBicho : public Game
+{
 private:
-    vector<pair<string, int>> animais;
-    vector<pair<string, int>> modosdeaposta;
+    string tipoSorteio;
+    std::vector<std::pair<std::string, int>> animais;
+    std::vector<std::string> modosdeaposta;
 
 public:
-    JogoDoBicho(GraphicModule* graphicModule, RandomNumberGenerator* randomNumberGenerator,InputModule* inputModule, string name);
-    void play(Player* player) override;
-    int escolherAnimal(const string& animalEscolhido);
-    void showGameHeader(string name, float balance);
-    void ApostarDezena();
-    void ApostarCentena();
-    void ApostarAnimal();
+    JogoDoBicho(GraphicModule *graphicModule, RandomNumberGenerator *randomNumberGenerator, InputModule *inputModule, string name, double minimumBet);
+    void play(Player *player) override;
+    int escolherAnimal(const string &animalEscolhido);
     void mostrarAnimal();
+    bool sorteio(const string &tipoSorteio, int numeroEscolhido);
+    double readBet(double minimumBet, double balance);
 };
 
 #endif

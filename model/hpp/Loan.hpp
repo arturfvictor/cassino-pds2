@@ -3,16 +3,16 @@
 
 class Loan {
     private:
-        float amount;
+        double amount;
         int totalRounds;
         int remainingRounds;
 
     public:
         Loan();
-        Loan(float amount, int totalRounds);
+        Loan(double amount, int totalRounds);
 
-        void setAmount(float amount);
-        float getAmount();
+        void setAmount(double amount);
+        double getAmount();
 
         void setTotalRounds(int totalRounds);
         int getTotalRounds();
