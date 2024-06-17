@@ -106,11 +106,8 @@ bool BingoGame :: verificarCartelaCompleta(const std::vector<std::string>& carte
     return true;
 }
 
-bool BingoGame:: DoOffer(){
-        this->graphicModule->clear();
-        this->graphicModule->println("Faça sua aposta:", 25, true, false);
-        int offer;
-        scanf("%d", &offer);
+bool BingoGame:: DoOffer(int offer){
+
         if(offer < 70){
             this->graphicModule->println("Aposta insuficiente", 25, true, false);
             return false;
@@ -137,10 +134,16 @@ void BingoGame::play(Player* player){
     std::vector<std::string> playercard(24);
     std::vector<int> old_numbers(75);
     bool player_offer;
+    bool player_lose = false;
+    int offer;
 
     showGameHeader(player->getName(), player -> getBalance());
+
     while(player_offer == false){
-       player_offer = DoOffer();
+        this->graphicModule->clear();
+        this->graphicModule->println("Faça sua aposta:", 25, true, false);
+        scanf("%d", &offer);
+       player_offer = DoOffer(offer);
     }
 
     GenerateCard(playercard);
@@ -148,11 +151,12 @@ void BingoGame::play(Player* player){
     printCard(playercard);
 
 
-    while(verificarCartelaCompleta(playercard) == false){
+    while(verificarCartelaCompleta(playercard) == false || player_lose == false){
         int ramdomnumber = makedraw(old_numbers);
 
         if(ramdomnumber = 0){
                 this->graphicModule->println("Bingo Finalizado", 25, true, false);
+                player_lose = true;
         }
 
         old_numbers.push_back(ramdomnumber);
@@ -163,4 +167,16 @@ void BingoGame::play(Player* player){
 
         this->graphicModule->clear();
     }
-}
+    if(player_lose){
+            this->graphicModule->println("YOU LOSE!!!", 25, true, false);
+            int final_balance = player -> getBalance();
+            player ->setBalance(final_balance - offer);
+            return;
+    }
+    if(verificarCartelaCompleta(playercard)){
+            this->graphicModule->println("YOU WIN!!!", 25, true, false);
+            int final_balance = player -> getBalance();
+            player ->setBalance(final_balance + offer);
+            return;  
+    }
+}   
