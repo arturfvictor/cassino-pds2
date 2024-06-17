@@ -18,6 +18,7 @@ class BingoGame : public Game {
     private:
         bool DoOffer(int offer); 
         bool verificarCartelaCompleta(const std::vector<int>& cartela);
+         bool HasCommonNumber(const std::vector<int>& cartela, const std::vector<int>& old_numbers);
         int makedraw(std::vector<int>& numbers);
         bool marcarNumeroNaCartela(std::vector<int>& cartela, int numero);
         bool ValidateConfirmation(string input);
