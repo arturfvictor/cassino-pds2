@@ -29,12 +29,12 @@ int main() {
     Player* player = nullptr;
 
     graphicModule->println("Você deseja usar um save anterior?", 80, true, false);
-    graphicModule->println("0 - Sim", 80, true, false);
-    graphicModule->println("1 - Não", 80, true, false);
+    graphicModule->println("1 - Sim", 80, true, false);
+    graphicModule->println("2 - Não", 80, true, false);
 
-    int res = inputModule->readIntInRange("", 0, 1);
+    int res = inputModule->readIntInRange("", 1, 2);
 
-    if (res == 0) {
+    if (res == 1) {
         graphicModule->print("Insira o ID do save: ", 80, false, false);
         int id = inputModule->readInt("");
 
@@ -55,7 +55,7 @@ int main() {
             playerDao->save(player);
         }
     } else {
-        graphicModule->print("Insira seu nome: ", 80, false, false);
+        graphicModule->print("Insira seu nome:", 80, false, false);
         string playerName = inputModule->readString("");
 
         player = new Player(
@@ -81,9 +81,20 @@ int main() {
 
     while (true) {
         showGameMenu(graphicModule, games, player);
-        int gameId = inputModule->readIntInRange("", 0, games.size() - 1);
-        games[gameId]->play(player);
+        int gameId = inputModule->readIntInRange("", 1, games.size());
+        games[gameId-1]->play(player);
         playerDao->save(player); // Saving player object after every round
+
+        if (player->getBalance() <= 0) {
+            graphicModule->println("Game Over", 10, true, true);
+            graphicModule->println("Você perdeu, mais sorte na proxíma vez", 10, true, true);
+            graphicModule->println("Pressione 1 para continuar", 80, false, false);
+
+            inputModule->readIntInRange("", 1, 1);
+
+            graphicModule->clear();
+            return 0;
+        }
     }
 }
 
@@ -94,7 +105,7 @@ void showGameMenu(GraphicModule* graphicModule, vector<Game*> games, Player* pla
     graphicModule->println("R$ " + std::to_string(player->getBalance()), 80, true, false);
     graphicModule->println("Escolha um dos jogos:", 80, false, true);
 
-    int pos = 0;
+    int pos = 1;
     for (auto game : games)
     {
         graphicModule->println(std::to_string(pos) + " - " + game->getName(), 25, false, false);
