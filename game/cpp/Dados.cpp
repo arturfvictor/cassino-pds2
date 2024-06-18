@@ -251,13 +251,15 @@ void Dados::escolha_2numeros(Player *player)
             aposta = aposta + (aposta * multiplicador);
             graphicModule->println("Seu saldo era: " + std::to_string(player->getBalance()), 80, false, true);
             ;
-            saldo = player->getBalance() + aposta; // altera o saldo do player
+            saldo = player->getBalance() + aposta;
+            player->setBalance(saldo); // altera o saldo do player
             graphicModule->println("Agora ele é : " + std::to_string(saldo), 80, false, true);
         }
         else{
                         graphicModule->println("Seu saldo era: " + std::to_string(player->getBalance()), 80, false, true);
             ;
-            saldo = player->getBalance() - aposta; // altera o saldo do player
+            saldo = player->getBalance() - aposta;
+            player->setBalance(saldo); // altera o saldo do player
             graphicModule->println("Agora ele é : " + std::to_string(saldo), 80, false, true);
         }
     
@@ -469,13 +471,15 @@ void Dados::escolha_maior_menor(Player *player)
             aposta = aposta + (aposta * multiplicador);
             graphicModule->println("Seu saldo era: " + std::to_string(player->getBalance()), 80, false, true);
             ;
-            saldo = player->getBalance() + aposta; // altera o saldo do player
+            saldo = player->getBalance() + aposta;
+            player->setBalance(saldo); // altera o saldo do player
             graphicModule->println("Agora ele é : " + std::to_string(saldo), 80, false, true);
         }
         else{
                         graphicModule->println("Seu saldo era: " + std::to_string(player->getBalance()), 80, false, true);
             ;
-            saldo = player->getBalance() - aposta; // altera o saldo do player
+            saldo = player->getBalance() - aposta;
+            player->setBalance(saldo); // altera o saldo do player
             graphicModule->println("Agora ele é : " + std::to_string(saldo), 80, false, true);
         }
 }

@@ -191,7 +191,7 @@ bool BingoGame ::verificarCartelaCompleta(const std::vector<int> &cartela)
 bool BingoGame::DoOffer(int offer)
 {
 
-    if (offer < 70)
+    if (offer < 70 )
     {
         this->graphicModule->println("Aposta insuficiente", 25, true, false);
         sleep_for(milliseconds(500));
@@ -272,7 +272,7 @@ void BingoGame::play(Player *player)
     {
         this->graphicModule->clear();
         this->graphicModule->println("Faça sua aposta:", 25, true, false);
-        offer = inputModule->readInt("");
+        offer = inputModule->readIntInRange("", 1, player->getBalance());
         // Valida a aposta do jogador
         player_offer = DoOffer(offer);
     }
