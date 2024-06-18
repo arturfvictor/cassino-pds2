@@ -209,6 +209,8 @@ void Dados::escolha_2numeros(Player *player)
                 input_2numeros = false;
                 input_rodadas = false;
                 input_aposta = false;
+                probabilidade=0;
+                
             }
             else
             {
@@ -423,6 +425,8 @@ void Dados::escolha_maior_menor(Player *player)
                 input_aposta = false;
                 input_de_escolha = false;
                 input_numero = false;
+                probabilidade=0;
+                soma=0;
             }
             else
             {
@@ -443,8 +447,13 @@ void Dados::escolha_maior_menor(Player *player)
     imprime_dados(gerado2);
     graphicModule->println("Dados: " + std::to_string(gerado1 + gerado2), 80, true, false);
     ;
-        if (gerado1 + gerado2 )
+        if (gerado1 + gerado2>n && escolha==1)
         {
+            venceu = true;
+            graphicModule->println("Você ganhou!", 80, false, false);
+            ;
+        }
+        else if(gerado1 + gerado2<n && escolha==0){
             venceu = true;
             graphicModule->println("Você ganhou!", 80, false, false);
             ;
