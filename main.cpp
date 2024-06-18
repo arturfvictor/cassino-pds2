@@ -7,6 +7,7 @@
 #include "./module/graphic-module/hpp/CommandLineGraphicModule.hpp"
 #include "./module/random-number-generator/hpp/BasicRandomNumberGenerator.hpp"
 #include "./game/hpp/CoinFlipGame.hpp"
+#include "./game/hpp/BingoGame.hpp"
 #include "./game/hpp/JogoDoBicho.hpp"
 #include "./game/blackjack/blackjack_hpp/blackJack.hpp"
 #include "./dao/hpp/GenericDao.hpp"
@@ -23,15 +24,17 @@ int main() {
     RandomNumberGenerator* randomNumberGenerator = new BasicRandomNumberGenerator();
 
     Player* p1 = new Player(1, "Player1", 500.0);
-
+  
     Game* coinFlip = new CoinFlipGame(graphicModule, randomNumberGenerator, inputModule, "Cara ou Coroa", 50);
     Game* blackJack = new BlackJack(graphicModule, randomNumberGenerator, inputModule, "Black Jack", 100);
     Game* bicho = new JogoDoBicho(graphicModule, randomNumberGenerator,inputModule, "Jogo do Bicho", 120);
+    Game* bingo = new BingoGame(graphicModule, randomNumberGenerator, inputModule, "Bingo", 70);
 
     vector<Game*> games;
     games.push_back(coinFlip);
     games.push_back(blackJack);
     games.push_back(bicho);
+    games.push_back(bingo);
 
     while (true) {
         showGameMenu(graphicModule, games, p1->getBalance());
