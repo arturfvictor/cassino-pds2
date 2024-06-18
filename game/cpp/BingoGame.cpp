@@ -27,7 +27,7 @@ BingoGame::BingoGame(GraphicModule *graphicModule, RandomNumberGenerator *random
 int BingoGame::makedraw(std::vector<int> &numbers)
 {
     int number;
-    number = this->randomNumberGenerator->generate(1, 26);
+    number = this->randomNumberGenerator->generate(1, 76);
     for (int num : numbers)
     {
         if (num == number)
@@ -70,7 +70,7 @@ void BingoGame::GenerateCard(std::vector<int> &cartela)
         int num;
         do
         {
-            num = randomNumberGenerator->generate(1, 26);
+            num = randomNumberGenerator->generate(1, 76);
         } while (std::find(uniqueNumbers.begin(), uniqueNumbers.end(), num) != uniqueNumbers.end());
 
         uniqueNumbers.push_back(num);
