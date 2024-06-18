@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.10)
 project(CassinoRoyale)
 
 # Collect all source files from different directories
-file(GLOB DAO "dao/*/cpp/*.cpp")
+file(GLOB DAO "dao/cpp/*.cpp")
 file(GLOB GAME "game/cpp/*.cpp")
 file(GLOB BLACKJACK "game/blackjack/blackjack_cpp/*.cpp")
 file(GLOB MODEL "model/cpp/*.cpp")

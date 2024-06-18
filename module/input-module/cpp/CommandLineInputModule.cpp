@@ -8,10 +8,10 @@ CommandLineInputModule::CommandLineInputModule(GraphicModule* graphicModule): In
 }
 
 int CommandLineInputModule::readInt(string text) {
+    cin.clear();
     int tries = 0;
     while(tries < 3) {
-        graphicModule->print(text, 80, false, false);
-        
+        graphicModule->print(text, 80, false, false); 
 
         try {
             return readInt();
@@ -26,13 +26,13 @@ int CommandLineInputModule::readInt(string text) {
 }
 
 int CommandLineInputModule::readIntInRange(string text, int start, int end) {
+    cin.clear();
     int tries = 0;
     while(tries < 3) {
         try {
             int input = readInt();
 
             if (input < start || input > end) {
-                tries++;
                 throw std::invalid_argument("Entrada inválida, tente novamente. (Tipo esperado: int entre " + std::to_string(start) + " e " + std::to_string(end) + ")");
             }
 
@@ -41,11 +41,13 @@ int CommandLineInputModule::readIntInRange(string text, int start, int end) {
             graphicModule->println(e.what(), 80, false, false);
             
         }
+        tries++;
     }
     throw std::invalid_argument("Excedido o número de tentativas!");
 }
 
 int CommandLineInputModule::readInt() {
+    cin.clear();
     int input;
     cin >> input;
 
@@ -62,7 +64,8 @@ int CommandLineInputModule::readInt() {
 }
 
 double CommandLineInputModule::readDouble(string text) {
-   int tries = 0;
+    cin.clear();
+    int tries = 0;
     while(tries < 3) {
         graphicModule->print(text, 80, false, false);
 
@@ -78,6 +81,7 @@ double CommandLineInputModule::readDouble(string text) {
 }
 
 double CommandLineInputModule::readDoubleInRange(string text, double start, double end) {
+    cin.clear();
     int tries = 0;
     while(tries < 3) {
         try {
@@ -92,11 +96,14 @@ double CommandLineInputModule::readDoubleInRange(string text, double start, doub
         } catch (const std::invalid_argument &e) {
             graphicModule->println(e.what(), 80, false, false);
         }
+
+        tries++;
     }
     throw std::invalid_argument("Excedido o número de tentativas!");
 }
 
 double CommandLineInputModule::readDouble() {
+    cin.clear();
     double input;
     cin >> input;
 
@@ -114,6 +121,7 @@ double CommandLineInputModule::readDouble() {
 
 
 string CommandLineInputModule::readString(string text) {
+    cin.clear();
     int tries = 0;
     while(tries < 3) {
         tries++;
@@ -125,7 +133,6 @@ string CommandLineInputModule::readString(string text) {
         cin >> input;
 
         if (cin.fail()) {
-
             // reseting cin state
             cin.clear();
             string ignore;
