@@ -5,8 +5,6 @@
 
 class CommandLineGraphicModule : public GraphicModule {
     private:
-        int charCount;
-    private:
         void enableTextFormatting(bool bold, bool underline);
         void disableTextFormatting(bool bold, bool underline);
     public:

@@ -34,5 +34,12 @@
 # Vscode files
 .vscode/
 
+# CLion files
+.idea/
+
 # CMake build files
 build/*
+
+# Save files
+*.csv
+*.csv.example
