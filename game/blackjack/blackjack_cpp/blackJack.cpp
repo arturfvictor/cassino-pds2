@@ -64,7 +64,8 @@ void BlackJack::play(Player *player)
         PlayerBlackjack house(2, "banca", true, 0);
         PlayerBlackjack playerBlackjack(player->getId(), player->getName(), true, player->getBalance());
         int option = 0;
-        float aposta = 0;
+        double aposta = 0;
+        bool betSituation = false;
         this->graphicModule->clear();
         this->graphicModule->println("Jogador " + playerBlackjack.getName() + ", oq voce deseja fazer?", 80, false, false);
         this->graphicModule->println("1. Jogar uma rodada", 80, false, false);
@@ -74,11 +75,16 @@ void BlackJack::play(Player *player)
         cin >> option;
         if (option == 1)
         {
-            option = 0;
-            this->graphicModule->clear();
-            this->graphicModule->println("Seu saldo atual é de R$ "+to_string(playerBlackjack.getBalance()), 80, false, false);
-            this->graphicModule->println("Qual sera sua aposta?", 80, false, false);
-            cin >> aposta;
+            while (!betSituation)
+            {
+                option = 0;
+                this->graphicModule->clear();
+                this->graphicModule->println("Seu saldo atual é de R$ " + to_string(playerBlackjack.getBalance()), 80, false, false);
+                this->graphicModule->println("A aposta minima é de R$ " + to_string(this->getMinimumBet()), 80, false, false);
+                this->graphicModule->println("Qual sera sua aposta?", 80, false, false);
+                cin >> aposta;
+                betSituation = verifyBet(&aposta, player);
+            }
             while (!gameIsOver)
             {
                 if (playerBlackjack.getIsplaying())
@@ -143,7 +149,7 @@ void BlackJack::play(Player *player)
 
                         this->graphicModule->println("As cartas da casa são:", 80, false, false);
                         printCards(house);
-                        this->graphicModule->println("Precione 1 para continuar", 80, false, false);
+                        this->graphicModule->println("Pressione 1 para continuar", 80, false, false);
                         cin >> option;
                         this->graphicModule->clear();
                     }
@@ -156,9 +162,12 @@ void BlackJack::play(Player *player)
                         while (option != 1)
                         {
                             gameIsOver = true;
+                            player->setBalance(player->getBalance() - aposta);
+                            playerBlackjack.setBalance(playerBlackjack.getBalance() - aposta);
+                            this->graphicModule->println("Seu novo saldo é de R$ " + to_string(playerBlackjack.getBalance()), 80, false, false);
                             this->graphicModule->println("Essa rodada acabou", 80, false, false);
 
-                            this->graphicModule->println("Precione 1 para voltar", 80, false, false);
+                            this->graphicModule->println("Pressione 1 para voltar", 80, false, false);
                             cin >> option;
                             this->graphicModule->clear();
                         }
@@ -178,20 +187,27 @@ void BlackJack::play(Player *player)
 
                             this->graphicModule->println("O jodador " + analyzeWhoWon(&playerBlackjack, &house)->getName() + " ganhou", 80, false, false);
                             gameIsOver = true;
-                            if(analyzeWhoWon(&playerBlackjack, &house)->getId()==1){
-                                player->setBalance(player->getBalance()+(2*aposta));
-                                playerBlackjack.setBalance(playerBlackjack.getBalance()+(2*aposta));
-                            }else{
-                                player->setBalance(player->getBalance()-aposta);
-                                playerBlackjack.setBalance(playerBlackjack.getBalance()-aposta);
+                            if (analyzeWhoWon(&playerBlackjack, &house)->getId() == 1)
+                            {
+                                player->setBalance(player->getBalance() + (2 * aposta));
+                                playerBlackjack.setBalance(playerBlackjack.getBalance() + (2 * aposta));
                             }
-                            this->graphicModule->println("Seu novo saldo é de R$ "+to_string(playerBlackjack.getBalance()), 80, false, false);
+                            else
+                            {
+                                player->setBalance(player->getBalance() - aposta);
+                                playerBlackjack.setBalance(playerBlackjack.getBalance() - aposta);
+                            }
+                            this->graphicModule->println("Seu novo saldo é de R$ " + to_string(playerBlackjack.getBalance()), 80, false, false);
                             this->graphicModule->println("Essa rodada acabou", 80, false, false);
 
-                            this->graphicModule->println("Precione 1 para voltar", 80, false, false);
+                            this->graphicModule->println("Pressione 1 para voltar", 80, false, false);
                             cin >> option;
                             this->graphicModule->clear();
                         }
+                    }
+                    if (player->getBalance() <= 0)
+                    {
+                        return;
                     }
                 }
             }
@@ -210,7 +226,7 @@ void BlackJack::play(Player *player)
                 this->graphicModule->println("parar de pedir cartas. Ao final ganha quem estiver mais proximo de 21 e nao tiver ultrapassado", 80, false, false);
                 this->graphicModule->println("esse valor.", 80, false, false);
 
-                this->graphicModule->println("Precione 1 para voltar", 80, false, false);
+                this->graphicModule->println("Pressione 1 para voltar", 80, false, false);
                 cin >> option;
             }
         }
@@ -344,7 +360,7 @@ bool BlackJack::analyzeNextPlay(PlayerBlackjack *playerBlackjack, PlayerBlackjac
     }
 }
 
-PlayerBlackjack* BlackJack::analyzeWhoWon(PlayerBlackjack *playerBlackjack, PlayerBlackjack *house)
+PlayerBlackjack *BlackJack::analyzeWhoWon(PlayerBlackjack *playerBlackjack, PlayerBlackjack *house)
 {
 
     if (playerBlackjack->getHand()->calculateHand() > house->getHand()->calculateHand())
@@ -368,5 +384,26 @@ PlayerBlackjack* BlackJack::analyzeWhoWon(PlayerBlackjack *playerBlackjack, Play
         {
             return house;
         }
+    }
+}
+
+bool BlackJack::verifyBet(double *aposta, Player *player)
+{
+    int option = 0;
+    if (*aposta <= 0.0 || *aposta > player->getBalance() || *aposta < this->getMinimumBet())
+    {
+        while (option != 1)
+        {
+            this->graphicModule->clear();
+            this->graphicModule->println("Sua aposta é invalida. Insira um valor valido.", 80, false, false);
+            this->graphicModule->println("Pressione 1 para realizar uma nova aposta", 80, false, false);
+            cin >> option;
+        }
+        aposta = 0;
+        return false;
+    }
+    else
+    {
+        return true;
     }
 }

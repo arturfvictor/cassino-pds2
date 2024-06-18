@@ -30,6 +30,6 @@ class BlackJack : public Game {
     void clear();
     bool analyzeNextPlay(PlayerBlackjack* player1,PlayerBlackjack* house);
     PlayerBlackjack* analyzeWhoWon(PlayerBlackjack* player1,PlayerBlackjack* house);
-
+    bool verifyBet(double* aposta,Player* player);
 };
 #endif
