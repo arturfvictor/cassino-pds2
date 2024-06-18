@@ -15,7 +15,7 @@
 using std::cout;
 using std::endl;
 
-void showGameMenu(GraphicModule* graphicModule, vector<Game*> games, string name, double balance);
+void showGameMenu(GraphicModule* graphicModule, vector<Game*> games, Player* player);
 int generateUniqueId(RandomNumberGenerator* randomNumberGenerator, PlayerDao* playerDao);
 
 int main() {
@@ -42,7 +42,7 @@ int main() {
             player = playerOnDB;
         } else {
             graphicModule->println("Save não encontrado!", 80, true, false);
-            graphicModule->print("Insira seu nome: ", 80, false, false);
+            graphicModule->print("Insira seu nome:", 80, false, false);
             string playerName = inputModule->readString("");
 
             player = new Player(
@@ -74,18 +74,18 @@ int main() {
     games.push_back(bicho);
 
     while (true) {
-        showGameMenu(graphicModule, games, player->getName(), player->getBalance());
+        showGameMenu(graphicModule, games, player);
         int gameId = inputModule->readIntInRange("", 0, games.size() - 1);
         games[gameId]->play(player);
         playerDao->save(player); // Saving player object after every round
     }
 }
 
-void showGameMenu(GraphicModule* graphicModule, vector<Game*> games, string name, double balance) {
+void showGameMenu(GraphicModule* graphicModule, vector<Game*> games, Player* player) {
     graphicModule->print("Olá, ", 80, false, false);
-    graphicModule->println(name, 80, true, false);
+    graphicModule->println(player->getName() + " (" + std::to_string(player->getId()) + ")", 80, true, false);
     graphicModule->print("Saldo Atual: ", 80, false, false);
-    graphicModule->println("R$ " + std::to_string(balance), 80, true, false);
+    graphicModule->println("R$ " + std::to_string(player->getBalance()), 80, true, false);
     graphicModule->println("Escolha um dos jogos:", 80, false, true);
 
     int pos = 0;
@@ -100,7 +100,6 @@ int generateUniqueId(RandomNumberGenerator* randomNumberGenerator, PlayerDao* pl
         int id = randomNumberGenerator->generate();
 
         if (playerDao->find(id) == nullptr) {
-            printf("%d", id);
             return id;
         }
     }
