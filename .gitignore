@@ -39,6 +39,7 @@
 
 # CMake build files
 build/*
+tests/build/*
 
 # Save files
 *.csv
