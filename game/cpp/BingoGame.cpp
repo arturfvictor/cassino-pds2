@@ -192,6 +192,7 @@ bool BingoGame::DoOffer(int offer)
     if (offer < 70)
     {
         this->graphicModule->println("Aposta insuficiente", 25, true, false);
+        sleep_for(milliseconds(500));
         return false;
     }
     else
