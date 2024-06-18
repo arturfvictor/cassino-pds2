@@ -135,9 +135,9 @@ void BingoGame::ValidatePlayerCard(int ramdomnumber, std::vector<int> &cartela)
             this->graphicModule->println("digite o numero: ", 80, false, false);
             int card_number;
             card_number = inputModule->readInt("");
-            if (card_number = ramdomnumber)
+            if (card_number == ramdomnumber)
             {
-                if (MarkPlayerCard(cartela, ramdomnumber) == true)
+                if (MarkPlayerCard(cartela, card_number) == true)
                 {
                     this->graphicModule->print("Número " + std::to_string(card_number) + " marcado na cartela.", 80, false, false);
                     printCard(cartela);
@@ -150,6 +150,8 @@ void BingoGame::ValidatePlayerCard(int ramdomnumber, std::vector<int> &cartela)
 
                     sleep_for(milliseconds(1000));
                 }
+            }else{
+                this->graphicModule->println("VOCÊ MARCOU O NUMERO INCORRETO NA CARTELA", 30, false, false);
             }
         }
     }
