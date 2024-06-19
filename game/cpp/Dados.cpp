@@ -151,7 +151,15 @@ void Dados::escolha_2numeros(Player *player)
         graphicModule->println("A probabilidade de sair os números escolhidos é de " + std::to_string(probabilidade * 100) + "%", 80, false, false);
 
         // multiplicador da aposta
-        multiplicador = 1 / probabilidade;
+
+        if (probabilidade >= 1)
+        {
+            multiplicador = 1;
+        }
+        else
+        {
+            multiplicador = 1 / probabilidade;
+        }
         graphicModule->println("O multiplicador será: " + std::to_string(multiplicador), 80, false, false);
         ;
 
@@ -209,8 +217,7 @@ void Dados::escolha_2numeros(Player *player)
                 input_2numeros = false;
                 input_rodadas = false;
                 input_aposta = false;
-                probabilidade=0;
-                
+                probabilidade = 0;
             }
             else
             {
@@ -233,7 +240,7 @@ void Dados::escolha_2numeros(Player *player)
         imprime_dados(gerado1);
         imprime_dados(gerado2);
         graphicModule->println("Dados: " + std::to_string(gerado1 + gerado2), 80, true, false);
-    }
+
         // ganhou ou perdeu
         if (gerado1 + gerado2 == n1 || gerado1 + gerado2 == n2)
         {
@@ -246,23 +253,26 @@ void Dados::escolha_2numeros(Player *player)
             graphicModule->println("Você perdeu!", 80, false, false);
             ;
         }
-        if (venceu == true)
-        {
-            aposta = aposta + (aposta * multiplicador);
-            graphicModule->println("Seu saldo era: " + std::to_string(player->getBalance()), 80, false, true);
-            ;
-            saldo = player->getBalance() + aposta;
-            player->setBalance(saldo); // altera o saldo do player
-            graphicModule->println("Agora ele é : " + std::to_string(saldo), 80, false, true);
-        }
-        else{
-                        graphicModule->println("Seu saldo era: " + std::to_string(player->getBalance()), 80, false, true);
-            ;
-            saldo = player->getBalance() - aposta;
-            player->setBalance(saldo); // altera o saldo do player
-            graphicModule->println("Agora ele é : " + std::to_string(saldo), 80, false, true);
-        }
-    
+    }
+    if (venceu == true)
+    {
+        graphicModule->println("Seu saldo era: " + std::to_string(player->getBalance()), 80, false, true);
+        saldo = player->getBalance() - aposta;
+        player->setBalance(saldo);//retira a aposta
+        aposta = aposta * multiplicador;
+        
+        saldo = player->getBalance() + aposta;
+        player->setBalance(saldo); // insere o retorno
+        graphicModule->println("Agora ele é : " + std::to_string(saldo), 80, false, true);
+    }
+    else
+    {
+        graphicModule->println("Seu saldo era: " + std::to_string(player->getBalance()), 80, false, true);
+        ;
+        saldo = player->getBalance() - aposta;
+        player->setBalance(saldo); // altera o saldo do player
+        graphicModule->println("Agora ele é : " + std::to_string(saldo), 80, false, true);
+    }
 }
 
 void Dados::escolha_maior_menor(Player *player)
@@ -372,7 +382,14 @@ void Dados::escolha_maior_menor(Player *player)
         graphicModule->println("A probabilidade de sair os números escolhidos é de " + std::to_string(probabilidade * 100) + "%", 80, false, false);
         ;
         // multiplicador da aposta
-        multiplicador = 1 / probabilidade;
+        if (probabilidade >= 1)
+        {
+            multiplicador = 1;
+        }
+        else
+        {
+            multiplicador = 1 / probabilidade;
+        }
         graphicModule->println("O multiplicador será: " + std::to_string(multiplicador), 80, false, false);
         ;
 
@@ -427,8 +444,8 @@ void Dados::escolha_maior_menor(Player *player)
                 input_aposta = false;
                 input_de_escolha = false;
                 input_numero = false;
-                probabilidade=0;
-                soma=0;
+                probabilidade = 0;
+                soma = 0;
             }
             else
             {
@@ -438,7 +455,6 @@ void Dados::escolha_maior_menor(Player *player)
         catch (const std::exception &e)
         {
             graphicModule->println(e.what(), 80, true, false);
-            
         }
     }
     // RODADA DE DADOS
@@ -449,39 +465,43 @@ void Dados::escolha_maior_menor(Player *player)
     imprime_dados(gerado2);
     graphicModule->println("Dados: " + std::to_string(gerado1 + gerado2), 80, true, false);
     ;
-        if (gerado1 + gerado2>n && escolha==1)
-        {
-            venceu = true;
-            graphicModule->println("Você ganhou!", 80, false, false);
-            ;
-        }
-        else if(gerado1 + gerado2<n && escolha==0){
-            venceu = true;
-            graphicModule->println("Você ganhou!", 80, false, false);
-            ;
-        }
-        else
-        {
-            graphicModule->println("Você perdeu!", 80, false, false);
-            ;
-        }
+    if (gerado1 + gerado2 > n && escolha == 1)
+    {
+        venceu = true;
+        graphicModule->println("Você ganhou!", 80, false, false);
+        ;
+    }
+    else if (gerado1 + gerado2 < n && escolha == 0)
+    {
+        venceu = true;
+        graphicModule->println("Você ganhou!", 80, false, false);
+        ;
+    }
+    else
+    {
+        graphicModule->println("Você perdeu!", 80, false, false);
+        ;
+    }
     // ganhou ou perdeu
-        if (venceu == true)
-        {
-            aposta = aposta + (aposta * multiplicador);
-            graphicModule->println("Seu saldo era: " + std::to_string(player->getBalance()), 80, false, true);
-            ;
-            saldo = player->getBalance() + aposta;
-            player->setBalance(saldo); // altera o saldo do player
-            graphicModule->println("Agora ele é : " + std::to_string(saldo), 80, false, true);
-        }
-        else{
-                        graphicModule->println("Seu saldo era: " + std::to_string(player->getBalance()), 80, false, true);
-            ;
-            saldo = player->getBalance() - aposta;
-            player->setBalance(saldo); // altera o saldo do player
-            graphicModule->println("Agora ele é : " + std::to_string(saldo), 80, false, true);
-        }
+    if (venceu == true)
+    {
+        graphicModule->println("Seu saldo era: " + std::to_string(player->getBalance()), 80, false, true);
+        saldo = player->getBalance() - aposta;
+        player->setBalance(saldo);//retira a aposta
+        aposta = aposta * multiplicador;
+        
+        saldo = player->getBalance() + aposta;
+        player->setBalance(saldo); // insere o retorno
+        graphicModule->println("Agora ele é : " + std::to_string(saldo), 80, false, true);
+    }
+    else
+    {
+        graphicModule->println("Seu saldo era: " + std::to_string(player->getBalance()), 80, false, true);
+        ;
+        saldo = player->getBalance() - aposta;
+        player->setBalance(saldo); // altera o saldo do player
+        graphicModule->println("Agora ele é : " + std::to_string(saldo), 80, false, true);
+    }
 }
 
 void Dados::play(Player *player) // deu bom
